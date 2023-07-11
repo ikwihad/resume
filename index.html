@@ -198,24 +198,51 @@
   </div>
   <script>
     function changeLanguage() {
-      var language = document.getElementById('language-select').value;
-      var textElements = document.getElementsByClassName('translatable');
+      const url = new URL(window.location.href);
+      const searchParams = url.searchParams;
+      const lang = searchParams.get('lang');
 
-      for (var i = 0; i < textElements.length; i++) {
-        var element = textElements[i];
+      const language = document.getElementById('language-select').value;
+      if (language !== lang) {
+        searchParams.set('lang', language);
+        window.location.href = url;
+        return;
+      }
 
-        if (language === 'ru') {
+      const textElements = document.getElementsByClassName('translatable');
+
+      for (let i = 0; i < textElements.length; i++) {
+        const element = textElements[i];
+
+        if (lang === 'ru') {
           element.innerHTML = element.dataset.ru;
-        } else if (language === 'en') {
+        } else if (lang === 'en') {
           element.innerHTML = element.dataset.en;
-        } else if (language === 'de') {
+        } else if (lang === 'de') {
           element.innerHTML = element.dataset.de;
-        } else if (language === 'pl') {
+        } else if (lang === 'pl') {
           element.innerHTML = element.dataset.pl;
         }
       }
     }
+
+    function init() {
+      
+      const url = new URL(window.location.href);
+      const searchParams = url.searchParams;
+      const lang = searchParams.get('lang');
+      const select = document.getElementById('language-select');
+      const optionValues = Array.from(select.options).map(option => option.value);
+      const set = new Set(optionValues);
+
+      if ((lang != select.value) && (set.has(lang)) ) {
+        select.value = lang;
+      }
+    }
+
+    init();
     changeLanguage();
+
   </script>
 </body>
 </html>
