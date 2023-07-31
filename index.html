@@ -70,7 +70,7 @@
       font-size: x-large;
     }
 
-    button {
+    #pdfLink {
       padding: 10px 20px;
       font-size: 16px;
       background-color: #4CAF50;
@@ -330,8 +330,11 @@
          data-de="Bei meiner vorherigen Arbeit betrug das Gehalt 1500 $. Derzeit habe ich mehr Erfahrung und ich möchte ein höheres Gehalt."
          data-pl="Na mojej poprzedniej pracy wynagrodzenie wynosiło 1500 $. Obecnie mam większe doświadczenie i chciałbym wyższe wynagrodzenie."></p>
   </div>
-  <button id="saveToPdfButton">Сохранить в PDF</button>
-   <a id="pdfLink" href="#" target="_blank">Открыть PDF</a>
+  <a id="pdfLink" href="#" target="_blank" class="translatable"
+    data-ru="Открыть в PDF:"
+    data-en="Open in PDF:"
+    data-de="In PDF öffnen:"
+    data-pl="Otwórz w PDF:"></a>
   <script>
     function changeLanguage() {
       const language = document.getElementById('language-select').value;
