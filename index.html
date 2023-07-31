@@ -363,8 +363,8 @@
 
       if (set.has(lang)) {
         select.value = lang;
-        const langElem = document.querySelector('.language-select');
-        langElem.style.display = 'none';
+        document.querySelector('.language-select').style.display = 'none';
+        document.getElementById('pdfLink').style.display = 'none';
       }
 
       changeLanguage();
