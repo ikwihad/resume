@@ -1,0 +1,11 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://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@github.com/ikwihad/resume.git",
+  "author": "Artyom Kovtun",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^20.9.0"
+  }
+}

@@ -70,7 +70,14 @@
       font-size: x-large;
     }
 
-
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -317,59 +324,54 @@
   </div>
 
   <div class="salary">
-      <h2 class="translatable" data-ru="Зарплата:" data-en="Salary:" data-de="Gehalt:" data-pl="Wynagrodzenie:"></h2>
-      <p class="translatable" data-ru="На предыдущей моей работе зарплата составляла 1500$. На данный момент у меня больше опыта и я хотел бы более высокую зарплату"
+    <h2 class="translatable" data-ru="Зарплата:" data-en="Salary:" data-de="Gehalt:" data-pl="Wynagrodzenie:"></h2>
+    <p class="translatable" data-ru="На предыдущей моей работе зарплата составляла 1500$. На данный момент у меня больше опыта и я хотел бы более высокую зарплату"
          data-en="At my previous job, the salary was $1500. Currently, I have more experience and I would like a higher salary."
          data-de="Bei meiner vorherigen Arbeit betrug das Gehalt 1500 $. Derzeit habe ich mehr Erfahrung und ich möchte ein höheres Gehalt."
          data-pl="Na mojej poprzedniej pracy wynagrodzenie wynosiło 1500 $. Obecnie mam większe doświadczenie i chciałbym wyższe wynagrodzenie."></p>
   </div>
+  <button id="saveToPdfButton">Сохранить в PDF</button>
+   <a id="pdfLink" href="#" target="_blank">Открыть PDF</a>
   <script>
     function changeLanguage() {
-      const url = new URL(window.location.href);
-      const searchParams = url.searchParams;
-      const lang = searchParams.get('lang');
-
       const language = document.getElementById('language-select').value;
-      if (language !== lang) {
-        searchParams.set('lang', language);
-        window.location.href = url;
-        return;
-      }
-
       const textElements = document.getElementsByClassName('translatable');
+      const pdfLinkElement = document.getElementById('pdfLink');
 
       for (let i = 0; i < textElements.length; i++) {
         const element = textElements[i];
 
-        if (lang === 'ru') {
-          element.innerHTML = element.dataset.ru;
-        } else if (lang === 'en') {
-          element.innerHTML = element.dataset.en;
-        } else if (lang === 'de') {
-          element.innerHTML = element.dataset.de;
-        } else if (lang === 'pl') {
-          element.innerHTML = element.dataset.pl;
-        }
+        element.innerHTML = element.dataset[language];
+        pdfLinkElement.href = `${language}.pdf`;
       }
     }
 
-    function init() {
-      
-      const url = new URL(window.location.href);
-      const searchParams = url.searchParams;
-      const lang = searchParams.get('lang');
+    function saveToPdf() {
+      console.log('PDF будет сохранен...');
+      const language = document.getElementById('language-select').value;
+
+    }
+
+    (function init() {
+      const lang = (new URL(window.location.href)).searchParams.get('lang');
       const select = document.getElementById('language-select');
       const optionValues = Array.from(select.options).map(option => option.value);
       const set = new Set(optionValues);
 
-      if ((lang != select.value) && (set.has(lang)) ) {
+      if (set.has(lang)) {
         select.value = lang;
+        const langElem = document.querySelector('.language-select');
+        langElem.style.display = 'none';
       }
-    }
 
-    init();
-    changeLanguage();
+      changeLanguage();
 
+      document.getElementById('saveToPdfButton').addEventListener('click', saveToPdf);
+
+      const currentScript = document.currentScript;
+      const parentElement = currentScript.parentElement;
+      parentElement.removeChild(currentScript);
+    })();
   </script>
 </body>
 </html>
